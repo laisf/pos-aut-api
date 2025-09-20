@@ -9,6 +9,7 @@ API REST desenvolvida em Node.js e Express para aprendizado de testes e automaç
 - **Transferências**: Sistema de transferências com regras de negócio
 - **Documentação Swagger**: API documentada e testável
 - **Testes Automatizados**: Suite de testes com Mocha, Chai e Supertest
+- **Testes Baseados em Riscos**: Análise de riscos críticos e cenários de segurança
 - **CI/CD Pipeline**: Integração contínua com GitHub Actions
 - **Cobertura de Código**: Relatórios de cobertura com nyc
 
@@ -92,21 +93,40 @@ npm run test:watch
 npm run test:coverage
 ```
 
+### Estratégia de Testes
+
+#### **Testes de API (7 testes)**
+- Validação de endpoints REST
+- Cenários de sucesso e erro
+- Autenticação JWT
+
+#### **Testes de Controller (7 testes)**
+- Testes isolados com Sinon
+- Mocks de serviços
+- Validação de lógica de negócio
+
+#### **Testes Baseados em Riscos (9 testes)**
+- **Segurança**: Tokens JWT, sanitização de inputs
+- **Integridade Financeira**: Valores inválidos, operações concorrentes
+- **Performance**: Múltiplas requisições simultâneas
+- **Lógica de Negócio**: Regras para usuários favorecidos
+- **Consistência de Dados**: Falhas em transferências, registro correto
+
 ### Cobertura de Código
-A API possui **77.4% de cobertura de código** com os seguintes resultados:
+A API possui **80.22% de cobertura de código** com os seguintes resultados:
 
 ```
 -------------------------|---------|----------|---------|---------|------------------------
 File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s      
 -------------------------|---------|----------|---------|---------|------------------------
-All files                |    77.4 |    66.03 |   65.71 |   76.87 |                       
+All files                |    80.22|    66.03 |   68.57 |   79.76 |                       
  pos-aut-api             |   84.61 |        0 |       0 |   84.61 |                       
   app.js                 |   84.61 |        0 |       0 |   84.61 | 42,55,63-64           
  pos-aut-api/config      |     100 |      100 |     100 |     100 |                       
   swagger.js             |     100 |      100 |     100 |     100 |                       
- pos-aut-api/controllers |   59.45 |      100 |   57.14 |   59.45 |                       
+ pos-aut-api/controllers |   72.97 |      100 |   71.42 |   72.97 |                       
   transferController.js  |   47.05 |      100 |   33.33 |   47.05 | 28-51                 
-  userController.js      |      70 |      100 |      75 |      70 | 41-53                 
+  userController.js      |      95 |      100 |     100 |      95 | 41                    
  pos-aut-api/middleware  |   83.33 |       75 |     100 |   83.33 |                       
   auth.js                |   83.33 |       75 |     100 |   83.33 | 8,16                  
  pos-aut-api/models      |   87.87 |    57.14 |   81.25 |    86.2 |                       
@@ -122,13 +142,15 @@ All files                |    77.4 |    66.03 |   65.71 |   76.87 |
 ```
 
 ### Testes Implementados
--  Criação de usuário com sucesso
--  Validação de usuário duplicado
--  Login com credenciais válidas
--  Login com credenciais inválidas
--  Criação de transferência com sucesso
--  Validação de limite para não favorecidos
--  Listagem de usuários
+-  **23 testes passando** (100% de sucesso)
+-  Criação e validação de usuários
+-  Autenticação JWT
+-  Transferências financeiras
+-  Testes isolados de Controller
+-  Análise de riscos de segurança
+-  Validação de integridade financeira
+-  Testes de performance
+-  Consistência de dados
 
 ##  Endpoints da API
 
@@ -214,7 +236,9 @@ pos-aut-api/
  config/              # Configurações
     swagger.js
  test/                # Testes automatizados
-    api.test.js
+    api.test.js              # Testes de API
+    controller.test.js       # Testes de Controller
+    risk-based.test.js       # Testes baseados em riscos
  .github/workflows/   # CI/CD Pipeline
     ci.yml
  app.js               # Configuração da aplicação
@@ -252,14 +276,37 @@ O projeto inclui uma pipeline de CI/CD configurada com GitHub Actions que execut
 - **Build da Aplicação**: Compilação e validação do código
 
 ### Status da Pipeline
-![CI/CD Pipeline](https://github.com/seu-usuario/pos-aut-api/workflows/CI/CD%20Pipeline/badge.svg)
+![CI/CD Pipeline](https://github.com/laisf/pos-aut-api/workflows/CI/CD%20Pipeline/badge.svg)
 
 ##  Métricas de Qualidade
 
-- **Cobertura de Código**: 77.4%
-- **Testes Passando**: 7/7 (100%)
+- **Cobertura de Código**: 80.22%
+- **Testes Passando**: 23/23 (100%)
 - **Dependências**: 0 vulnerabilidades conhecidas
 - **Rate Limiting**: 100 requests por IP a cada 15 minutos
+- **Estratégia de Testes**: Baseada em análise de riscos
+
+##  Estratégia de Testes
+
+### **Análise de Riscos (Risk-Based Testing)**
+- Foco nos cenários mais críticos para o negócio
+- Identificação de vulnerabilidades de segurança
+- Validação de integridade financeira
+
+### **Melhores Práticas Ágeis**
+- Testes rápidos e focados
+- Feedback contínuo para desenvolvedores
+- Cobertura de edge cases
+
+### **Conformidade com Normas ISO**
+- ISO/IEC 25010: Características de qualidade
+- ISO/IEC 29119: Processos de teste
+- Validação de funcionalidade, performance e segurança
+
+### **Princípios RST (Rapid Software Testing)**
+- Testes baseados em heurísticas
+- Foco em cenários de risco
+- Validação de comportamento real da API
 
 ##  Limitações
 
@@ -274,14 +321,6 @@ O projeto inclui uma pipeline de CI/CD configurada com GitHub Actions que execut
 3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
-
-##  Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-##  Suporte
-
-Para dúvidas ou suporte, abra uma issue no repositório.
 
 ##  Documentação Adicional
 
