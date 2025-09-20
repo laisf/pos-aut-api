@@ -275,10 +275,6 @@ O projeto inclui uma pipeline de CI/CD configurada com GitHub Actions que execut
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-##  Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
 ##  Suporte
 
 Para dúvidas ou suporte, abra uma issue no repositório.
